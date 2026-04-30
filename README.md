@@ -21,16 +21,22 @@ Healthmate is a web-based application designed to help users identify potential 
 ## 📁 Project Structure
 
 ```text
-Healthmate/
-├── dataset/                  # Contains the nutritional dataset CSV
-├── models/                   # Saved ML models, scalers, and encoders
-├── static/                   # CSS and images for the web interface
-├── templates/                # HTML templates (index, questionnaire, results, about)
-├── app.py                    # Main Flask application
-├── healthmate_ml.py          # Machine Learning training & evaluation script
-├── dataset_creating.py       # Script for dataset generation/processing
-├── requirements.txt          # List of project dependencies
-└── Healthmate_Full_doc.pdf   # Project documentation
+healthmate/
+│
+├── models/
+├── data/
+│
+├── src/
+│   ├── app.py
+│   ├── ml/
+│   │   ├── model.py
+│   │   ├── preprocess.py
+│
+├── static/
+├── templates/
+│
+├── requirements.txt
+├── README.md
 ```
 
 ## ⚙️ Getting Started
