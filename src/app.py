@@ -1,18 +1,31 @@
 from flask import Flask, render_template, request
 import joblib
 import numpy as np
+import os
 import pandas as pd
+from pathlib import Path
 
-app = Flask(__name__)
+BASE_DIR = Path(__file__).resolve().parent
+ROOT_DIR = BASE_DIR.parent
+DATA_PATH = ROOT_DIR / "dataset" / "nutritional_dataset.csv"
+MODEL_DIR = ROOT_DIR / "models"
+TEMPLATES_DIR = ROOT_DIR / "templates"
+STATIC_DIR = ROOT_DIR / "static"
+
+app = Flask(
+    __name__,
+    template_folder=str(TEMPLATES_DIR),
+    static_folder=str(STATIC_DIR),
+)
 
 # Load dataset for recommendation lookup
-df = pd.read_csv("dataset/nutritional_dataset.csv")
+df = pd.read_csv(DATA_PATH)
 
 # Load trained models and preprocessing objects
-svm_model = joblib.load("models/svm_model.pkl")
-xgb_model = joblib.load("models/xgboost_model.pkl")
-scaler = joblib.load("models/scaler.pkl")
-label_encoders = joblib.load("models/label_encoders.pkl")
+svm_model = joblib.load(MODEL_DIR / "svm_model.pkl")
+xgb_model = joblib.load(MODEL_DIR / "xgboost_model.pkl")
+scaler = joblib.load(MODEL_DIR / "scaler.pkl")
+label_encoders = joblib.load(MODEL_DIR / "label_encoders.pkl")
 
 # Define input features
 feature_columns = ['Age', 'Gender', 'BMI', 'Daily Water Intake (L)', 'Physical Activity Level', 'Eating Habits',
@@ -107,4 +120,8 @@ def predict():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 5000)),
+        debug=True,
+    )

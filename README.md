@@ -21,72 +21,129 @@ Healthmate is a web-based application designed to help users identify potential 
 ## 📁 Project Structure
 
 ```text
-healthmate/
+Healthmate/
 │
+├── dataset/
+│   └── nutritional_dataset.csv
+├── docs/
 ├── models/
-├── data/
-│
+│   ├── scaler.pkl
+│   ├── svm_model.pkl
+│   ├── xgboost_model.pkl
+│   └── label_encoders.pkl
 ├── src/
 │   ├── app.py
-│   ├── ml/
-│   │   ├── model.py
-│   │   ├── preprocess.py
-│
+│   └── ml/
+│       ├── dataset_creating.py
+│       └── healthmate_ml.py
 ├── static/
+│   ├── css/
+│   ├── images/
+│   └── js/
 ├── templates/
-│
+│   ├── about_us.html
+│   ├── index.html
+│   ├── questionnaire.html
+│   └── results.html
 ├── requirements.txt
-├── README.md
+└── README.md
 ```
 
 ## ⚙️ Getting Started
 
 ### Prerequisites
+
 - Python 3.8 or higher installed on your system.
 
-### Installation
+### Installation (Windows)
 
-1. **Clone the repository**:
-   ```bash
-   git clone <repository-url>
-   cd Healthmate
+1. **Open PowerShell and navigate to the project root**:
+
+   ```powershell
+   cd C:\Users\ASUS\OneDrive\Documents\GitHub\Healthmate
    ```
 
-2. **Create a virtual environment**:
-   ```bash
+2. **Create and activate the virtual environment**:
+
+   ```powershell
    python -m venv .venv
-   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   .\.venv\Scripts\activate
    ```
 
-3. **Install dependencies**:
+3. **Install the required dependencies**:
+
+   ```powershell
+   pip install -r requirements.txt
+   ```
+
+4. **Generate or verify the trained models**:
+   If you do not have `models/svm_model.pkl`, `models/xgboost_model.pkl`, `models/scaler.pkl`, and `models/label_encoders.pkl`, run:
+   ```powershell
+   .\.venv\Scripts\python.exe src\ml\healthmate_ml.py
+   ```
+
+### Installation (macOS/Linux)
+
+1. **Open a terminal and navigate to the project root**:
+
+   ```bash
+   cd ~/OneDrive/Documents/GitHub/Healthmate
+   ```
+
+2. **Create and activate the virtual environment**:
+
+   ```bash
+   python3 -m venv .venv
+   source .venv/bin/activate
+   ```
+
+3. **Install the required dependencies**:
+
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **Ensure Models are Generated**:
-   If the `models/` folder is empty, run the training script:
+4. **Generate or verify the trained models**:
+   If you do not have `models/svm_model.pkl`, `models/xgboost_model.pkl`, `models/scaler.pkl`, and `models/label_encoders.pkl`, run:
    ```bash
-   python healthmate_ml.py
+   .venv/bin/python src/ml/healthmate_ml.py or python src/ml/healthmate_ml.py
    ```
 
 ### Running the Application
 
-1. Start the Flask server:
-   ```bash
-   python app.py
+1. **Run the Flask app from the repository root (Windows)**:
+
+   ```powershell
+   .\.venv\Scripts\python.exe src\app.py or python src/app.py
    ```
-2. Open your browser and navigate to `http://127.0.0.1:5000`.
+
+2. **Run the Flask app from the repository root (macOS/Linux)**:
+
+   ```bash
+   .venv/bin/python src/app.py
+   ```
+
+3. **Open the browser** and go to:
+
+   ```text
+   http://127.0.0.1:5000
+   ```
+
+4. **Use the web interface** to enter your health data and view the nutritional deficiency prediction and recommendation results.
 
 ## 🧠 Machine Learning Approach
 
 Healthmate uses a two-step prediction process for high accuracy:
+
 1. **Binary Classification (SVM)**: First, it determines if a deficiency is present or not.
 2. **Multi-class Classification (XGBoost)**: If a deficiency is detected, this model identifies the specific type.
 
 The models are trained on a comprehensive dataset of health metrics including age, BMI, physical activity, eating habits, and more.
 
 ## 📋 Note
+
 This project is for educational/informational purposes. Always consult with a healthcare professional before making significant changes to your diet or lifestyle.
 
 ---
+
 Developed as part of the Healthmate project.
